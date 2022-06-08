@@ -33,7 +33,7 @@ runs:
         GITHUB_USERNAME: ${{ inputs.git-username }}
         GITHUB_PASSWORD: ${{ inputs.github-token }}
       shell: bash
-      run: ${{github.action_path}}/update-me.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
+      run: ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
     - name: Set output for release version
       id: release-version
       shell: bash
