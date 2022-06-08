@@ -20,10 +20,10 @@ inputs:
 outputs:
   release-version:
     description: 'The updated release version which has been tagged'
-    value: ${{ steps.get-outputs.outputs.version }}
+    value: ${{ steps.release-version.outputs.release-version }}
   next-develop-version:
     description: 'The next development version (SNAPSHOT)'
-    value: ${{ steps.get-outputs.outputs.version }}
+    value: ${{ steps.next-dev-version.outputs.next-develop-version }}
 
 runs:
   using: "composite"
@@ -32,14 +32,19 @@ runs:
       env:
         GITHUB_USERNAME: ${{ inputs.git-username }}
         GITHUB_PASSWORD: ${{ inputs.github-token }}
-      run: |
-      ${{github.action_path}}/update-me.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
-      echo "::set-output name=release-version::$PROJECT_REL_VERSION"
-      echo "::set-output name=next-develop-version::$NEXT_DEV_VERSION"
       shell: bash
+      run: ${{github.action_path}}/update-me.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
+    - name: Set output for release version
+      id: release-version
+      shell: bash
+      run:  echo '::set-output name=release-version::$PROJECT_REL_VERSION'
+    - name: Set output for release version
+      id: next-dev-version
+      shell: bash
+      run: echo '::set-output name=next-develop-version::$NEXT_DEV_VERSION'
     - name: Result
       shell: bash
       run: |
-      "echo 'release-version: ${{ steps.get-outputs.outputs.release-version }}'"
-      "echo 'next-develop-version: ${{ steps.get-outputs.outputs.next-develop-version }}'"
+      "echo 'release-version: ${{ steps.release-version.outputs.release-version }}'"
+      "echo 'next-develop-version: ${{ steps.next-dev-version.outputs.next-develop-version }}'"
 
