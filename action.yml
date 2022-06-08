@@ -15,7 +15,7 @@ inputs:
   git-username:
     description: 'The name to use for the version update commit'
     required: true
-    default: github-actions[bot]
+    default: github-actions-bot
   git-email:
     description: 'The email address used to create the update version commit'
     required: true
