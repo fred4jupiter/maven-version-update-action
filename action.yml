@@ -37,11 +37,11 @@ runs:
     - name: Set output for release version
       id: release-version
       shell: bash
-      run:  echo '::set-output name=release-version::$PROJECT_REL_VERSION'
+      run:  echo '::set-output name=release-version::${{ env.PROJECT_REL_VERSION }}'
     - name: Set output for release version
       id: next-dev-version
       shell: bash
-      run: echo '::set-output name=next-develop-version::$NEXT_DEV_VERSION'
+      run: echo '::set-output name=next-develop-version::${{ env.NEXT_DEV_VERSION }}'
     - name: Print release version
       shell: bash
       run: "echo 'release version is ${{ steps.release-version.outputs.release-version }}'"
