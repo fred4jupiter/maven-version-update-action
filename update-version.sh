@@ -13,7 +13,7 @@ esac
 done
 
 if [ $# -eq 0 ]; then
-    echo "No arguments provided. Usage example: ./update-me.sh -gu=freddy -gp='secret'"
+    echo "No arguments provided. Usage example: ./update-version.sh -gu=freddy -gp='secret'"
     exit 1
 fi
 
