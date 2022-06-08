@@ -32,19 +32,28 @@ runs:
       env:
         GITHUB_USERNAME: ${{ inputs.git-username }}
         GITHUB_PASSWORD: ${{ inputs.github-token }}
+        PROJECT_REL_VERSION: ${{ steps.release-version.outputs.release-version }}
+        NEXT_DEV_VERSION: ${{ steps.release-version.outputs.next-develop-version }}
       shell: bash
       run: ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
+    - name: echo
+      shell: bash
+      run: hello ${{ env.PROJECT_REL_VERSION }}
+
     - name: Set output for release version
       id: release-version
       shell: bash
-      run:  echo '::set-output name=release-version::${{ env.PROJECT_REL_VERSION }}'
+      run: echo '::set-output name=release-version::${{ env.PROJECT_REL_VERSION }}'
+
     - name: Set output for release version
       id: next-dev-version
       shell: bash
       run: echo '::set-output name=next-develop-version::${{ env.NEXT_DEV_VERSION }}'
+
     - name: Print release version
       shell: bash
       run: "echo 'release version is ${{ steps.release-version.outputs.release-version }}'"
+
     - name: Print next development version
       shell: bash
       run: "echo 'next dev version is ${{ steps.next-dev-version.outputs.next-develop-version }}'"
