@@ -1,6 +1,6 @@
 # ref: https://help.github.com/en/actions/building-actions/metadata-syntax-for-github-actions
 name: Maven Version Update Action
-description: A simple GitHub Actions to update the version of Maven projects
+description: A simple GitHub Action to update the pom version of Maven projects with release and next development version with tagging.
 
 author: Michael Stähler
 
