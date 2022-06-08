@@ -45,5 +45,5 @@ git push
 echo "release version is: $PROJECT_REL_VERSION"
 echo "next development version is: $NEXT_DEV_VERSION"
 
-export PROJECT_REL_VERSION
-export NEXT_DEV_VERSION
+echo $PROJECT_REL_VERSION > release_version.txt
+echo $NEXT_DEV_VERSION > next_dev_version.txt
