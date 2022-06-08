@@ -35,7 +35,7 @@ runs:
         PROJECT_REL_VERSION: ${{ steps.release-version.outputs.release-version }}
         NEXT_DEV_VERSION: ${{ steps.release-version.outputs.next-develop-version }}
       shell: bash
-      run: ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
+      run: source ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
     - name: echo
       shell: bash
       run: echo $PROJECT_REL_VERSION
