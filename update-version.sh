@@ -9,6 +9,9 @@ case $i in
     -gp=*|--github-password=*)
     GITHUB_PASSWORD="${i#*=}"
     ;;
+    -ge=*|--github-email=*)
+    GITHUB_EMAIL="${i#*=}"
+    ;;
 esac
 done
 
@@ -29,7 +32,15 @@ if [ -z "$GITHUB_PASSWORD" ]
     exit 1
 fi
 
+if [ -z "$GITHUB_EMAIL" ]
+  then
+    echo "Please define the Github email address. Example: -ge=something@somewhere.com"
+    exit 1
+fi
+
 git config --global user.name $GITHUB_USERNAME
+git config --global user.email $GITHUB_EMAIL
+
 REPO="scm:git:https://$GITHUB_ACTOR:$GITHUB_PASSWORD@github.com/$GITHUB_REPOSITORY.git"
 
 mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit -DconnectionUrl=$REPO

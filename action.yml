@@ -16,6 +16,10 @@ inputs:
     description: 'The name to use for the version update commit'
     required: true
     default: github-actions[bot]
+  git-email:
+    description: 'The email address used to create the update version commit'
+    required: true
+    default: github-actions-bot@users.noreply.github.com
 
 outputs:
   release-version:
@@ -32,8 +36,7 @@ runs:
       env:
         GITHUB_USERNAME: ${{ inputs.git-username }}
         GITHUB_PASSWORD: ${{ inputs.github-token }}
-        PROJECT_REL_VERSION: ${{ steps.release-version.outputs.release-version }}
-        NEXT_DEV_VERSION: ${{ steps.release-version.outputs.next-develop-version }}
+        GITHUB_EMAIL: ${{ inputs.git-email }}
       shell: bash
       run: ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
 
