@@ -38,7 +38,7 @@ runs:
       run: ${{github.action_path}}/update-version.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
     - name: echo
       shell: bash
-      run: echo ${{ env.PROJECT_REL_VERSION }}
+      run: echo $PROJECT_REL_VERSION
 
     - name: Set output for release version
       id: release-version
