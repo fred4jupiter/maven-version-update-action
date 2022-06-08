@@ -30,7 +30,7 @@ if [ -z "$GITHUB_PASSWORD" ]
 fi
 
 git config --global user.name $GITHUB_USERNAME
-REPO="https://$GITHUB_ACTOR:$GITHUB_PASSWORD@github.com/$GITHUB_REPOSITORY.git"
+REPO="scm:git:https://$GITHUB_ACTOR:$GITHUB_PASSWORD@github.com/$GITHUB_REPOSITORY.git"
 
 mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit -DconnectionUrl=$REPO
 mvn build-helper:parse-version scm:tag -Dbasedir=. -Dtag=release_\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_PASSWORD -DconnectionUrl=$REPO
