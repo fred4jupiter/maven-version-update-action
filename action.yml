@@ -32,7 +32,6 @@ runs:
       env:
         GITHUB_USERNAME: ${{ inputs.git-username }}
         GITHUB_PASSWORD: ${{ inputs.github-token }}
-        GITHUB_EMAIL: ${{ inputs.git-email }}
       run: |
       ${{github.action_path}}/update-me.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
       echo "::set-output name=release-version::$PROJECT_REL_VERSION"
