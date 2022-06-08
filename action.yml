@@ -42,9 +42,9 @@ runs:
       id: next-dev-version
       shell: bash
       run: echo '::set-output name=next-develop-version::$NEXT_DEV_VERSION'
-    - name: Result
+    - name: Print release version
       shell: bash
-      run: |
-      "echo 'release-version: ${{ steps.release-version.outputs.release-version }}'"
-      "echo 'next-develop-version: ${{ steps.next-dev-version.outputs.next-develop-version }}'"
-
+      run: "echo 'release version is ${{ steps.release-version.outputs.release-version }}'"
+    - name: Print next development version
+      shell: bash
+      run: "echo 'next dev version is ${{ steps.next-dev-version.outputs.next-develop-version }}'"
