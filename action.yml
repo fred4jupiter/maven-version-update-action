@@ -1,0 +1,46 @@
+# ref: https://help.github.com/en/actions/building-actions/metadata-syntax-for-github-actions
+name: Maven Version Update Action
+description: A simple GitHub Actions to update the version of Maven projects
+
+author: Michael Stähler
+
+branding:
+  color: purple
+  icon: git-commit
+
+inputs:
+  github-token:
+    description: 'A GitHub auth token to commit the updated version'
+    required: true
+  git-username:
+    description: 'The name to use for the version update commit'
+    required: true
+    default: github-actions[bot]
+
+outputs:
+  release-version:
+    description: 'The updated release version which has been tagged'
+    value: ${{ steps.get-outputs.outputs.version }}
+  next-develop-version:
+    description: 'The next development version (SNAPSHOT)'
+    value: ${{ steps.get-outputs.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Update Maven Version
+      env:
+        GITHUB_USERNAME: ${{ inputs.git-username }}
+        GITHUB_PASSWORD: ${{ inputs.github-token }}
+        GITHUB_EMAIL: ${{ inputs.git-email }}
+      run: |
+      ${{github.action_path}}/update-me.sh -gu=$GITHUB_USERNAME -gp=$GITHUB_PASSWORD
+      echo "::set-output name=release-version::$PROJECT_REL_VERSION"
+      echo "::set-output name=next-develop-version::$NEXT_DEV_VERSION"
+      shell: bash
+    - name: Result
+      shell: bash
+      run: |
+      "echo 'release-version: ${{ steps.get-outputs.outputs.release-version }}'"
+      "echo 'next-develop-version: ${{ steps.get-outputs.outputs.next-develop-version }}'"
+
