@@ -47,9 +47,9 @@ REPO="scm:git:https://$GITHUB_ACTOR:$GITHUB_PASSWORD@github.com/$GITHUB_REPOSITO
 mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit -DconnectionUrl=$REPO
 PROJECT_REL_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
 git add pom.xml
-git commit -a -m "next release version $PROJECT_REL_VERSION"
+git commit -a -m "release version $PROJECT_REL_VERSION"
 
-git tag -a $PROJECT_REL_VERSION -m "next release version $PROJECT_REL_VERSION"
+git tag -a $PROJECT_REL_VERSION -m "release version $PROJECT_REL_VERSION"
 git push origin $PROJECT_REL_VERSION
 
 # set new development version
