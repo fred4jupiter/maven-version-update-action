@@ -43,10 +43,16 @@ git config --global user.email $GITHUB_EMAIL
 
 REPO="scm:git:https://$GITHUB_ACTOR:$GITHUB_PASSWORD@github.com/$GITHUB_REPOSITORY.git"
 
+# set release version
 mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} versions:commit -DconnectionUrl=$REPO
-mvn build-helper:parse-version scm:tag -Dbasedir=. -Dtag=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.incrementalVersion} -Dusername=$GITHUB_USERNAME -Dpassword=$GITHUB_PASSWORD -DconnectionUrl=$REPO
 PROJECT_REL_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+git add pom.xml
+git commit -a -m "next release version $PROJECT_REL_VERSION"
 
+git tag -a $PROJECT_REL_VERSION -m "next release version $PROJECT_REL_VERSION"
+git push origin $PROJECT_REL_VERSION
+
+# set new development version
 mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion}-SNAPSHOT versions:commit -DconnectionUrl=$REPO
 NEXT_DEV_VERSION=$(mvn -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
 
