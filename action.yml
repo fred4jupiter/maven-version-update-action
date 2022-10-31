@@ -43,12 +43,12 @@ runs:
     - name: Set output for release version
       id: release-version
       shell: bash
-      run: echo ::set-output name=release-version::$(cat release_version.txt)
+      run: echo "{release-version}={$(cat release_version.txt)}" >> $GITHUB_OUTPUT
 
     - name: Set output for release version
       id: next-dev-version
       shell: bash
-      run: echo ::set-output name=next-develop-version::$(cat next_dev_version.txt)
+      run: echo "{next-develop-version}={$(cat next_dev_version.txt)}" >> $GITHUB_OUTPUT
 
     - name: Print release version
       shell: bash
